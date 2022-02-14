@@ -18,8 +18,11 @@ func main() {
 	// 	err := Cat(filename)
 	// 	log.Printf("Cat error: %v", err)
 	// }()
+	count := 0
 	for {
-		logger.Printf("123")
+		logger.Printf("%v", count)
+		log.Printf("%v", count)
+		count += 1
 		time.Sleep(1 * time.Second)
 	}
 }

@@ -14,6 +14,12 @@ func New(filename string) (io.WriteCloser, error) {
 	if !os.IsExist(err) && err != nil {
 		return nil, err
 	}
+	// read
+	r, err := syscall.Open("/tmp/"+filename, syscall.O_NONBLOCK|syscall.O_RDONLY, 0755)
+	if err != nil {
+		return nil, err
+	}
+	defer syscall.Close(r)
 	// open
 	l, err := os.OpenFile("/tmp/"+filename, os.O_WRONLY, 0755)
 	if err != nil {
