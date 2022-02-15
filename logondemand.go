@@ -9,19 +9,20 @@ import (
 
 // New create fifo if nessesary, which can be used in `log.New()`
 func New(filename string) (io.WriteCloser, error) {
+	fn := "/tmp" + filename
 	// mkfifo
-	err := syscall.Mkfifo("/tmp/"+filename, 0755)
+	err := syscall.Mkfifo(fn, 0755)
 	if !os.IsExist(err) && err != nil {
 		return nil, err
 	}
 	// read
-	r, err := syscall.Open("/tmp/"+filename, syscall.O_NONBLOCK|syscall.O_RDONLY, 0755)
+	r, err := syscall.Open(fn, syscall.O_NONBLOCK|syscall.O_RDONLY, 0755)
 	if err != nil {
 		return nil, err
 	}
 	defer syscall.Close(r)
 	// open
-	l, err := os.OpenFile("/tmp/"+filename, os.O_WRONLY, 0755)
+	l, err := os.OpenFile(fn, os.O_WRONLY, 0755)
 	if err != nil {
 		return nil, err
 	}
