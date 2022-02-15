@@ -9,7 +9,7 @@ import (
 
 // New create fifo if nessesary, which can be used in `log.New()`
 func New(filename string) (io.WriteCloser, error) {
-	fn := "/tmp" + filename
+	fn := "/tmp/" + filename
 	// mkfifo
 	err := syscall.Mkfifo(fn, 0755)
 	if !os.IsExist(err) && err != nil {
